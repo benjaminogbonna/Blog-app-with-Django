@@ -1,0 +1,105 @@
+{% extends "blog/base.html" %}
+{% load static %}
+
+<!-- for the page title -->
+{% block title %}Contact{% endblock %}  
+
+<!-- Entire page content -->
+{% block content %}
+
+		<div id="colorlib-main">
+			<section class="ftco-section contact-section px-md-4">
+	      <div class="container">
+	        <div class="row d-flex mb-5 contact-info">
+	          <div class="col-md-12 mb-4">
+	            <h2 class="h3">Contact Information</h2>
+	          </div>
+	          <div class="w-100"></div>
+	          <div class="col-lg-6 col-xl-3 d-flex mb-4">
+	          	<div class="info bg-light p-4">
+	          		<center>
+		            	<span class="icon-map-signs"></span>
+		            </center>
+		            <p>
+		            	No 23 Benjamin Street, Off University of Abuja Road, Abuja
+		            </p>
+		          </div>
+	          </div>
+	          <div class="col-lg-6 col-xl-3 d-flex mb-4">
+	          	<div class="info bg-light p-4">
+		            <center>
+		            	<span class="icon-phone"></span>
+		            </center>
+		            <p>
+		            	<a href="tel://+2348129944424">
+		            		+ 234 8129 944 424<br/>
+		            	</a>
+		            	<a href="tel://+2349092019891">
+		            		+ 234 9092 019 891
+		            	</a>
+		            </p>
+		          </div>
+	          </div>
+	          <div class="col-lg-6 col-xl-3 d-flex mb-4">
+	          	<div class="info bg-light p-4">
+		            
+		            	<center>
+		            		<span class="icon-envelope-o"></span>
+		            	</center>
+		            	<p>
+		            		<a href="info.mlseries@gmail.com">
+		            		info.mlseries@gmail.com
+		            	</a>
+		            </p>
+		          </div>
+	          </div>
+	          <div class="col-lg-6 col-xl-3 d-flex mb-4">
+	          	<div class="info bg-light p-4">
+	          		<center>
+		            	<span class="icon-globe"></span>
+		            </center>
+		            
+		            	<a href="{% url 'blog:post_list' %}" target="-blank">
+		            		www.mlseries.com
+		            	</a>
+		            
+		          </div>
+	          </div>
+	        </div>
+	        <div class="row block-9">
+	          <div class="col-lg-6 d-flex">
+{% if sent %}
+	<h2>E-mail successfully sent</h2>
+          	{% else %}
+          <!-- <h2>Something went wrong</h2> -->
+            <form action="#" class="bg-light p-5 contact-form" method="post">
+              <div class="form-group">
+              	{% csrf_token %}
+              	{{ contact_form.as_p }}
+              	{% csrf_token %}
+              </div>
+              <div class="form-group">
+                <input type="submit" value="Send Message" 
+                class="btn btn-primary py-3 px-5">
+              </div>
+            </form>
+{% endif %}	
+	          
+	          </div>
+
+	          <div class="col-lg-6 d-flex">
+	          	<div id="map" class="bg-light">
+	          			
+	          	</div>
+	          </div>
+	        </div>
+	      </div>
+	    </section>
+		</div><!-- END COLORLIB-MAIN -->
+	</div><!-- END COLORLIB-PAGE -->
+
+  <!-- loader -->
+  <!-- <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div> -->
+
+    
+  {% endblock %}

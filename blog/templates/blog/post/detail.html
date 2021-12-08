@@ -1,0 +1,124 @@
+{% extends "blog/base.html" %}
+{% load blog_tags %}
+{% load static %}
+<!-- for the page title -->
+{% block title %}{{ post.title }}{% endblock %}  
+
+<!-- Entire page content -->
+{% block content %}
+
+<div id="colorlib-main">
+			<section class="ftco-section ftco-no-pt ftco-no-pb">
+	    	<div class="container">
+	    		<div class="row d-flex">
+	    			<div class="col-lg-8 px-md-5 py-5">
+	    				<div class="row pt-md-4">
+	    					<h1 class="">{{ post.title }}</h1>
+	    					&nbsp;&nbsp;
+	                  <div class="meta"><br/>
+	                  	
+	                  	 <span class="icon-person"></span> 
+	                    <b>{{ post.author }}</b>
+
+	                    <span class="icon-calendar"></span> 
+	                    	{{ post.publish }}
+	                	
+	                  </div>
+	    						
+
+		            <p>{{ post.body|markdown }}</p>
+		            <p>
+		              <img src="{% static 'images/image_7.jpg' %}" alt="" class="img-fluid">
+
+		            </p>
+		            <div class="tag-widget post-tag-container mb-5 mt-5">
+		              <div class="tagcloud">
+
+		              	<a href="{% url 'blog:post_share' post.id %}" 
+		                class="tag-cloud-link">
+	                    	Share Post
+	                    	<span class="icon-share"></span> 
+	                    </a>
+		       
+		              	<h2>Related Posts</h2>
+						{% for post in similar_posts %}
+			
+		                <a href="{{ post.get_absolute_url }}" 
+		                class="tag-cloud-link">{{ post.title }}</a>
+		                {% empty %}
+							There are no similar posts yet.
+						{% endfor %}
+		                
+		              </div>
+		            </div>
+		            
+		            <div class="about-author d-flex p-4 bg-light">
+		              <div class="bio mr-5">
+		                <img src="{% static 'images/person_1.jpg' %}" alt="Image placeholder" class="img-fluid mb-4">
+		              </div>
+		              <div class="desc">
+		                <h3><b>{{ post.author }}</b></h3>
+		                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus itaque, autem necessitatibus voluptate quod mollitia delectus aut, sunt placeat nam vero culpa sapiente consectetur similique, inventore eos fugit cupiditate numquam!</p>
+		              </div>
+		            </div>
+
+
+		            <div class="pt-5 mt-5">
+		              <h3 class="mb-5 font-weight-bold">
+		              	<!-- commenst for each post -->
+							{% with comments.count as total_comments %}
+		
+					{{ total_comments }} comment{{ total_comments|pluralize }}
+		
+							{% endwith %}
+		              </h3>
+
+		            <ul class="comment-list">
+		                <li class="comment">
+		                		                  
+		                  {% for comment in comments %}
+		                  <div class="comment-body">
+		                    <h3>
+		                    	<span class="icon-person"></span>&nbsp;
+		                    	<b>{{ comment.name }}</b>
+		                    </h3>
+		                    <div class="meta">{{ comment.created }}</div>
+		                    <p>{{ comment.body|linebreaks }}</p>
+		                  </div>
+		                  {% empty %}
+		                  <p>No comments yet, be the first to comment.</p>
+						  {% endfor %}
+		                </li>
+		            </ul>
+		              <!-- END comment-list -->
+		              
+{% if new_comment %}
+		<h2>Your comment has been added.</h2>
+{% else %}
+		              <div class="comment-form-wrap pt-5">
+		                <h3 class="mb-5">Leave a comment</h3>
+		                <form class="p-3 p-md-5 bg-light" method="post">
+		                	<div class="form-group">
+		                		{{ comment_form.as_p }}
+								{% csrf_token %}
+		                	</div>
+		                	<div class="form-group">
+		                		<input type="submit" value="Post comment" 
+		                		class="btn py-3 px-4 btn-primary">
+		                	</div>
+
+		                </form>
+		              </div>
+{% endif %}
+		            </div>
+			    		</div><!-- END-->
+			    	</div>
+			    	{% include "aside.html" %}
+
+	    			<!-- END COL -->
+	    		</div>
+	    	</div>
+	    </section>
+		</div><!-- END COLORLIB-MAIN -->
+
+{% endblock %}
